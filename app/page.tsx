@@ -112,7 +112,7 @@ function TimelineItem({ item, index, onOpen }: { item: any; index: number; onOpe
             </div>
             <div className="mt-2 flex flex-wrap gap-2">
               {item.tags?.map((t: string) => (
-                <Badge key={t} variant="secondary">
+                <Badge key={t}>
                   {t}
                 </Badge>
               ))}
@@ -195,7 +195,7 @@ function FullscreenModal({ item, onClose }: { item: any; onClose: () => void }) 
                 <h2 className="text-2xl md:text-3xl font-semibold truncate">{item.title}</h2>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {item.tags?.map((t: string) => (
-                    <Badge key={t} variant="secondary">{t}</Badge>
+                    <Badge key={t}>{t}</Badge>
                   ))}
                 </div>
               </div>
