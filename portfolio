@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -271,6 +272,16 @@ export default function PortfolioTimeline() {
   const handleOpen = (item: any) => setActiveItem(item);
   const handleClose = () => setActiveItem(null);
 
+  // lock background scroll while modal is open
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    if (activeItem) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [activeItem]);
+
   // "Dev tests": lightweight runtime checks so we catch content mistakes early
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -280,6 +291,10 @@ export default function PortfolioTimeline() {
       console.assert(
         ITEMS.every((it) => it.side === "left" || it.side === "right"),
         "Each item.side must be 'left' or 'right'",
+      );
+      console.assert(
+        ITEMS.some((it) => it.side === "left") && ITEMS.some((it) => it.side === "right"),
+        "There should be at least one left and one right item",
       );
       ITEMS.forEach((it) => {
         if (it.gallery && it.gallery.length === 0) {
